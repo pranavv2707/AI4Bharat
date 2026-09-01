@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import soundfile as sf
 import torch
@@ -9,7 +10,15 @@ MODEL_ID = "ai4bharat/indic-conformer-600m-multilingual"
 class IndicASRClient:
     def __init__(self, device=None):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.model = AutoModel.from_pretrained(MODEL_ID, trust_remote_code=True).to(self.device)
+        
+        # Read the Hugging Face Token set in Render's Environment Variables
+        hf_token = os.getenv("HF_TOKEN")
+        
+        self.model = AutoModel.from_pretrained(
+            MODEL_ID, 
+            trust_remote_code=True,
+            token=hf_token
+        ).to(self.device)
         self.model.eval()
 
     def transcribe(self, audio_path, language="hi", decoding="ctc"):
