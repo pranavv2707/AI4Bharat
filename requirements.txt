@@ -1,11 +1,5 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-
 fastapi
 uvicorn
-torch
-transformers
-onnxruntime
+indic-asr-onnx
 soundfile
 numpy
-gtts
-jiwer
